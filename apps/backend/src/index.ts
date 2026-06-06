@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth";
 import alertRoutes from "./routes/alerts";
+import { startAlertGenerator } from "./services/alertGenerator";
 
 dotenv.config();
 
@@ -21,4 +22,5 @@ app.use("/alerts", alertRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+  startAlertGenerator();
 });

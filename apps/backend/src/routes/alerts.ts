@@ -4,6 +4,7 @@ import { db } from "../db/client";
 import { alerts } from "../db/schema";
 import { eq, desc } from "drizzle-orm";
 import { requireAuth, AuthRequest } from "../middleware/auth";
+import { generateAlert } from "../services/alertGenerator";
 
 const router = Router();
 
@@ -49,6 +50,16 @@ router.patch("/:id", requireAuth, async (req: AuthRequest, res) => {
     })
     .where(eq(alerts.id, id))
     .returning();
+});
+
+router.delete("/nuke", async (_req, res) => {
+  await db.delete(alerts);
+  return res.json({ message: "Alerts table cleared!" });
+});
+
+router.post("/generate", async (_req, res) => {
+  const alert = await generateAlert();
+  return res.json(alert);
 });
 
 export default router;
