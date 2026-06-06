@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-app.get("/health", (req, res) => {
+app.get("/health", (_, res) => {
   res.json({ status: "OK", timestamp: new Date().toISOString() });
 });
 
